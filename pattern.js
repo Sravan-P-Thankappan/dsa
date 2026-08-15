@@ -315,3 +315,51 @@ for (let i = 1; i <= n; i++) {
     console.log('');
 }
  */
+
+
+// ----------- reverse array using 2 pointer ------------
+
+function reverseArray(ar) {
+    i = 0;
+    j = ar.length - 1;
+    while (i < j) {
+        let t = ar[i];
+        ar[i] = ar[j];
+        ar[j] = t;
+        i++
+        j--
+    }
+    return ar;
+}
+
+// console.log(reverseArray([1, 2, 3, 4, 5]));
+
+
+// ------------- reversing an array ---------
+
+/* let ar = [1, 2, 3, 4]
+
+for (let i = 0; i < (ar.length) / 2; i++) {
+    let tem = ar[i];
+    ar[i] = ar[ar.length - i - 1];
+    ar[ar.length - i - 1] = tem;
+}
+
+console.log(ar) */
+
+
+// checking a string is palindrome or not
+// two pointer is also used to findout this
+
+function isStringPalindrome(str) {
+    let res = true;
+    for (let i = 0; i < (str.length) / 2; i++) {
+        if (str[i] != str[str.length - i - 1]) {
+            res = false;
+            break;
+        }
+    }
+    return res;
+}
+
+console.log(isStringPalindrome('malayalam'));

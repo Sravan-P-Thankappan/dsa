@@ -84,3 +84,78 @@ one_to_N(4) */
 }
 
 N_to_one(1,4) */
+
+//---------- Sum of N numbers ------
+
+/* this is functional type where the funtion return sum by taking the n */
+function sumOfNnumbers(n) {
+
+    if (n == 0) return 0;
+    let res = sumOfNnumbers(n - 1);
+    let sum = n + res;
+    return sum;
+}
+// console.log(sumOfNnumbers(3));
+
+/* below is the parameterised way where parameter is updating and printing the sum */
+
+/* 
+function sumOfNnumbersInParameterised(n, sum) {
+    if (n == 0) {
+        console.log(sum);
+        return;
+    }
+    sumOfNnumbersInParameterised(n - 1, sum + n);
+}
+
+sumOfNnumbersInParameterised(3, 0) */
+
+
+// ------------ factorial using recursion ------
+
+function factorial(n) {
+    if (n == 1) return 1;
+    let res = n * factorial(n - 1);
+    return res;
+}
+
+// console.log(factorial(5)) 
+
+
+
+//----------- reverse array ----------
+
+function reverseArray(ar) {
+    if (ar.length == 1) return ar;
+    let firstElem = ar[0];
+    let res = reverseArray(ar.slice(1));
+    res.push(firstElem);
+    return res;
+}
+
+
+//  console.log(reverseArray([1, 2, 3, 8, 4, 7]));
+
+
+function reverseArray1(i, ar) {
+    if (i >= (ar.length) / 2) return;
+    let t = ar[i];
+    ar[i] = ar[ar.length - i - 1];
+    ar[ar.length - i - 1] = t;
+    reverseArray1(i + 1, ar);
+    return ar;
+}
+
+// console.log(reverseArray1(0, [1, 2, 3, 5]));
+
+
+// --------- checking a string is palindrome or not ---------
+
+function isStringPalindrome(i, str) {
+    if (i >= (str.length) / 2) return true;
+    if (str[i] != str[str.length - i - 1]) return false;
+    return isStringPalindrome(i + 1, str);
+
+}
+
+console.log(isStringPalindrome(0, 'abx'));
