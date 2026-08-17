@@ -362,4 +362,82 @@ function isStringPalindrome(str) {
     return res;
 }
 
-console.log(isStringPalindrome('malayalam'));
+// console.log(isStringPalindrome('malayalam'));
+
+/* 
+function fibonacciSeries(n) {
+    if (n == 0) return [0];
+    let f = [0, 1];
+    if (n == 1) return f;
+    for (i = 2; i <= n; i++) {
+        f.push(f[i - 2] + f[i - 1]);
+    }
+    return f;
+}
+
+
+console.log(fibonacciSeries(5));
+ */
+
+/* 
+function nthFibonaci(n) {
+    let f = [0, 1];
+    for (i = 2; i <= n; i++) {
+        f.push(f[i - 2] + f[i - 1]);
+    }
+    return f[n];
+}
+
+
+console.log(nthFibonaci(5));
+ */
+
+// ------------- move all 1 to left side-----
+
+function moveAllones(ar) {
+    let i = 0;
+    let j = ar.length - 1;
+    while (i <= j) {
+        if (ar[i] == 1) {
+            i++;
+        } else if (ar[j] == 1) {
+            let t = ar[j];
+            ar[j] = ar[i];
+            ar[i] = t;
+            j--;
+        } else {
+            j--;
+        }
+    }
+    return ar;
+}
+
+// console.log(moveAllones([1, 2, 3, 4, 1, 5, 6]));
+
+
+// ----------- sub array of size k with max sum -------
+// brute force approach
+
+function maxSumSubarray(ar, k) {
+    let finalSubAr = [];
+    let finalSum = 0;
+
+    for (let i = 0; i <= ar.length - k; i++) {
+        let subAr = [];
+        let sum = 0;
+
+        for (let j = i; j < k + i; j++) {
+            subAr.push(ar[j]);
+            sum += ar[j];
+        }
+
+        if (sum > finalSum) {
+            finalSum = sum;
+            finalSubAr = subAr;
+        }
+    }
+
+    return finalSubAr;
+}
+
+console.log(maxSumSubarray([4, 5, 9, 0, 7, 1, 9, 0], 3));

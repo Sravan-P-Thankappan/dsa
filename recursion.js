@@ -158,4 +158,15 @@ function isStringPalindrome(i, str) {
 
 }
 
-console.log(isStringPalindrome(0, 'abx'));
+// console.log(isStringPalindrome(0, 'abx'));
+
+// ---------- nth fibonacci -------------
+//[0,1,1,2,3,5,8,13,21]
+/*
+ function nthFibonaci(n) {
+    if (n == 0 || n == 1) return n;
+    return nthFibonaci(n - 2) + nthFibonaci(n - 1);
+
+}
+console.log(nthFibonaci(7)); 
+*/
