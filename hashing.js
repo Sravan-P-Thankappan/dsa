@@ -119,10 +119,13 @@ function highesteFrequencyNumber(ar) {
     }
 
     let hfn = 0;
+    let lfn = ar.length; // for findin min frequecy no
     for ([key, value] of map) {
         if (value > hfn) hfn = key;
+        if (value < lfn) lfn = key;
     }
-    return `${hfn} is the highest frequent number`;
+    return `${hfn} is the highest frequent number  
+${lfn} is the lowest frequent number`;
 }
 
-console.log(highesteFrequencyNumber([1, 2, 3, 2, 7, 2, 9, 3, 3, 3, 3, 3]));
+console.log(highesteFrequencyNumber([10, 5, 10, 15, 10, 5]));
