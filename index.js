@@ -134,3 +134,52 @@ function frequencyOfNumber(ar, n) {
 }
 
 // console.log(frequencyOfNumber([1, 2, 3, 4, 5, 1], 1));
+
+
+/* 
+Remove All Occurrences of an Element in an Array
+ */
+
+function removeAllOccurance(ar, k) {
+    let j = 0;
+    for (let i = 0; i < ar.length; i++) {
+        if (ar[j] !== k) {
+            j++;
+        } else if (ar[i] !== k) {
+            let t = ar[i];
+            ar[i] = ar[j];
+            ar[j] = t;
+            j++;
+        }
+    }
+    console.log(ar)
+    return j;
+}
+
+//  console.log(removeAllOccurance([0, 1, 3, 0, 2, 2, 4, 2], 2));
+
+
+// Reverse a string preserving spaces
+
+function reverseString(str) {
+    // Help others
+    str = str.split('');
+    let i = 0;
+    let j = str.length - 1;
+
+    while (i < j) {
+        if (str[i] == ' ') i++;
+        else if (str[j] == ' ') j--;
+        else {
+            let t = str[i];
+            str[i] = str[j];
+            str[j] = t;
+            i++;
+            j--;
+        }
+    }
+
+    return str.join('')
+}
+
+// console.log(reverseString("internship at geeks for geeks"))

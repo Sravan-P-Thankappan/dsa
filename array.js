@@ -181,5 +181,210 @@ function unionOfSortedArray(nums1, nums2) {
     return union;
 }
 
-console.log(unionOfSortedArray([1, 2, 3, 4, 5], [1, 2, 7]));
+// console.log(unionOfSortedArray([1, 2, 3, 4, 5], [1, 2, 7]));
+
+
+/* 
+Intersection of two sorted arrays.
+
+[1, 2, 2, 3, 3, 4, 5, 6]
+[2, 3, 3, 5, 6, 6, 7]
+
+===> [ 2, 3, 3, 5, 6 ]
+
+Two sorted array inter section mean finding the elements that are present in both arrays.
+*/
+
+function intersectionOfSortedArrays(nums1, nums2) {
+    let l1 = nums1.length;
+    let l2 = nums2.length;
+    let i = 0;
+    let j = 0;
+    let intersection = [];
+
+    while (i < l1 && j < l2) {
+
+        if (nums1[i] < nums2[j]) {
+            i++;
+        } else if (nums2[j] < nums1[i]) {
+            j++;
+        }
+        else {
+            intersection.push(nums1[i]);
+            i++;
+            j++;
+        }
+    }
+
+    return intersection;
+}
+
+// let arr1 = [1, 2, 4, 5, 6];
+// let arr2 = [2, 3, 5, 7];
+// console.log(intersectionOfSortedArrays(arr1, arr2));
+
+/* 
+Find the missing number
+*/
+// Brute force approach
+
+function missingNumberBruteForce(ar) {
+    let n = ar.length + 1;
+    for (let i = 1; i <= n; i++) {
+        let found = false;
+        for (let j = 0; j < ar.length; j++) {
+            if (ar[j] == i) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) return i;
+    }
+}
+
+// console.log(missingNumberBruteForce([1, 2, 3, 5]));
+
+// ------- better approach using hash
+
+function missingNumberUsingHash(ar) {
+    let n = ar.length + 1;
+    let hash = new Array(n).fill(0);
+
+    for (let i = 0; i < ar.length; i++) {
+        hash[ar[i]] += 1;
+    }
+
+    for (let i = 1; i <= n; i++) {
+        if (hash[i] == 0) {
+            return i;
+        }
+    }
+}
+
+// console.log(missingNumberUsingHash([8, 2, 4, 5, 3, 7, 1]));
+
+//  optimal approach
+
+function missingNumber(ar) {
+    let n = ar.length + 1;
+    let sum = 0;
+    for (let i = 0; i < ar.length; i++) {
+        sum += ar[i];
+    }
+
+    let expectedSum = (n * (n + 1)) / 2
+
+    return expectedSum - sum;
+}
+
+// console.log(missingNumber([8, 2, 4, 5, 3, 7, 1]))
+
+/* 
+ using XOR operator (^)
+
+ 0 ^ 0 = 0
+ 0 ^ 1 = 1
+ 1 ^ 0 = 1
+ 1 ^ 1 = 0
+
+ if the two number are same XOR will result 0 (1^1 =0)
+ 0 XOR any number results the number itself.
+
+*/
+function missingNumberUsingXor(ar) {
+
+    let n = ar.length + 1;
+    let xor1 = 0;
+    for (let i = 1; i <= n; i++) {
+        xor1 ^= i; // 0 ^ 1 ^ 2 ^ ..... ^ n
+    }
+
+    let xor2 = 0;
+    for (let i = 0; i < ar.length; i++) {
+        xor2 ^= ar[i];
+    }
+
+    return xor1 ^ xor2; // 1^2^3^4 ^ 1^2^4 (1 xor 1 = 0; 2 xor 2 = 0; 4 xor 4 =0; finally 0 xor 3 = 3 )
+}
+
+// console.log(missingNumberUsingXor([8, 2, 4, 5, 3, 7, 1, 6]));
+
+
+function findMaxConsecutiveOnes(ar) {
+    let cnt = 0;
+    let max = 0;
+    for (let i = 0; i < ar.length; i++) {
+        if (ar[i] == 1) {
+            cnt++;
+            max = Math.max(max, cnt)
+        }
+        else {
+            cnt = 0;
+        }
+    }
+    return max;
+}
+
+// console.log(findMaxConsecutiveOnes([1, 1, 0, 0, 1, 1, 1, 0]));
+
+
+/* 
+------- longest sub array with sum K -------- 
+this is brute force approach
+*/
+function longestSubArray(ar, k) {
+    let finalLength = 0
+    for (let i = 0; i < ar.length; i++) {
+        let sum = 0;
+        let len = 0;
+        for (let j = i; j < ar.length; j++) {
+            sum += ar[j];
+            len++;
+            if (sum >= k) break;
+        }
+
+        if (sum == k) finalLength = Math.max(finalLength, len);
+    }
+
+    return finalLength;
+}
+
+
+// console.log(longestSubArray([5, 4, 2, 3, 1, 1, 1], 3));  [1,2,3,1,1,1,1,3,3]
+
+
+// -------------- Two pointer sliding window method. type shrinking-------
+function longestSubArrayTwoPointer(ar, k) {
+
+    let sum = 0;
+    let len = 0;
+    let i = 0;
+    let j = 0;
+
+    while (j < ar.length) {
+
+        sum += ar[j];
+
+        while (i <= j && sum > k) {
+            sum -= ar[i];
+            i++;
+        }
+
+        if (sum == k) {
+            len = Math.max(len, (j - i) + 1);
+        }
+        j++;
+    }
+
+    return len;
+
+}
+
+console.log(longestSubArrayTwoPointer([-3, 2, 1], 6));
+
+
+
+// -----Fixed-size Sliding Window-------
+// . Maximum Sum Subarray of Size K
 
