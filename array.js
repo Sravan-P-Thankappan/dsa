@@ -491,3 +491,61 @@ function twoSumOfSortedArray(ar, t) {
 }
 
 // console.log(twoSumOfSortedArray([2, 5, 6, 8, 11], 14));
+
+
+// ------------- Sort array of 0,1 and 2 ------------
+
+function sortColorsBeter(ar) {
+
+    let c0 = 0, c1 = 0, c2 = 0;
+    // counting total 0, 1 and 2
+    for (let i = 0; i < ar.length; i++) {
+        if (ar[i] == 0) c0++
+        if (ar[i] == 1) c1++
+        if (ar[i] == 2) c2++
+
+    }
+    let j = 0;
+    for (let i = 1; i <= c0; i++) {
+        ar[j++] = 0;
+    }
+    for (let i = 1; i <= c1; i++) {
+        ar[j++] = 1;
+    }
+    for (let i = 1; i <= c2; i++) {
+        ar[j++] = 2;
+    }
+
+    console.log(ar);
+}
+
+// sortColorsBeter([1, 2, 0, 0, 2, 1]);
+
+//------ optimal solution will be, using dutch national flag algorithm    (DNF)
+
+function sortColors(ar) {
+    let left = 0;
+    let mid = 0;
+    let right = ar.length - 1;
+
+    while (mid <= right) {
+        if (ar[mid] == 0) {
+            let t = ar[left];
+            ar[left] = ar[mid];
+            ar[mid] = t;
+            left++;
+            mid++;
+        } else if (ar[mid] == 1) {
+            mid++;
+        } else {
+            let t = ar[right];
+            ar[right] = ar[mid];
+            ar[mid] = t;
+            right--;
+        }
+    }
+
+    console.log(ar);
+}
+
+sortColors([2, 0, 2, 1, 1, 0]);
