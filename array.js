@@ -340,7 +340,6 @@ function longestSubArray(ar, k) {
         let len = 0;
         for (let j = i; j < ar.length; j++) {
             sum += ar[j];
-            len++;
             if (sum >= k) break;
         }
 
@@ -351,7 +350,7 @@ function longestSubArray(ar, k) {
 }
 
 
-// console.log(longestSubArray([5, 4, 2, 3, 1, 1, 1], 3));  [1,2,3,1,1,1,1,3,3]
+// console.log(longestSubArray([5, 4, 2, 3, 1, 1], 3));  //[1,2,3,1,1,1,1,3,3]
 
 
 // -------------- Two pointer sliding window method. type shrinking-------
@@ -381,10 +380,114 @@ function longestSubArrayTwoPointer(ar, k) {
 
 }
 
-console.log(longestSubArrayTwoPointer([-3, 2, 1], 6));
+// console.log(longestSubArrayTwoPointer([1, 2, 3, 1, 1, 1, 1, 3, 3], 6));
 
 
 
 // -----Fixed-size Sliding Window-------
 // . Maximum Sum Subarray of Size K
 
+function maxSumSubarray(ar, k) {
+
+    let windowSum = 0;
+    let maxSum = 0;
+
+    // current window
+    for (let i = 0; i < k; i++) {
+        windowSum += ar[i];
+    }
+
+    maxSum = windowSum;
+
+    for (let i = k; i < ar.length; i++) {
+        windowSum += ar[i] - ar[i - k];
+        maxSum = Math.max(maxSum, windowSum);
+    }
+
+    return maxSum;
+}
+
+// console.log(maxSumSubarray([2, 1, 5, 1, 3, 2],3));
+
+// First Negative Number in Every Window of Size K
+
+function firstNegativeNumber(ar, k) {
+
+    let negative = [];
+    for (let i = 0; i < k; i++) {
+        if (ar[i] < 0) {
+            negative.push(ar[i]);
+            break;
+        }
+    }
+
+    for (let i = k; i < ar.length; i++) {
+        let j = (i - k) + 1;
+        let noNeg = true;
+        while (j <= i) {
+            if (ar[j] < 0) {
+                negative.push(ar[j]);
+                noNeg = false;
+                break;
+            }
+            j++;
+        }
+        if (noNeg) negative.push(0);
+    }
+
+    return negative;
+}
+
+// console.log(firstNegativeNumber([12, -1, -7, 8, -15, 30, 16, 28],3))
+
+
+// ------ Two Sum -------------
+/* 
+function twoSumBruteForce(ar, t) {
+
+    for (let i = 0; i < ar.length - 1; i++) {
+        for (let j = i; j < ar.length; j++) {
+            let sum = ar[i] + ar[j];
+            if (sum == t) return [i, j];
+        }
+    }
+
+    return [];
+
+} */
+
+// console.log(twoSumBruteForce([2, 6, 5, 8, 11], 14));
+
+function twoSumBetter(ar, t) { // O(nlogn)
+
+    // create a map and store array values and it's index there.
+    const map = new Map();
+    for (let i = 0; i < ar.length; i++) {
+        map.set(ar[i], i);
+    }
+
+    for (let i = 0; i < ar.length; i++) {
+        let key = t - ar[i];
+        if (map.has(key)) return [i, map.get(key)];
+    }
+    return [];
+}
+
+// console.log(twoSumBetter([2, 6, 5, 8, 11], 14));
+
+
+//------- for sorted array we can use two pointer approach --------
+
+function twoSumOfSortedArray(ar, t) {
+    let i = 0;
+    let j = ar.length - 1;
+    while (i < j) {
+        let sum = ar[i] + ar[j];
+        if (sum == t) return [i, j];
+        if (sum < t) i++;
+        if (sum > t) j--;
+    }
+    return [];
+}
+
+// console.log(twoSumOfSortedArray([2, 5, 6, 8, 11], 14));
