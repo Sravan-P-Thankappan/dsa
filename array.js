@@ -548,4 +548,46 @@ function sortColors(ar) {
     console.log(ar);
 }
 
-sortColors([2, 0, 2, 1, 1, 0]);
+// sortColors([2, 0, 2, 1, 1, 0]);
+
+// ---------- Majority Element (> than N/2) --------
+
+function majorityElemBF(ar) {
+    for (let i = 0; i < ar.length; i++) {
+        let c = 0;
+        for (let j = 0; j < ar.length; j++) {
+            if (ar[i] == ar[j]) c++;
+        }
+        if (c > (ar.length / 2)) {
+            return ar[i];
+        }
+    }
+
+}
+
+// console.log(majorityElemBF([2, 2, 1, 1, 1, 2, 2]));
+
+//--------- Moore voting algorithm  ------------------
+function majorityElement(ar) {
+
+    let candidate = null;
+    let vote = 0;
+    for (let i = 0; i < ar.length; i++) {
+        if (vote == 0) {
+            candidate = ar[i]
+        } else if (ar[i] == candidate) {
+            vote++;
+        } else {
+            vote--
+        }
+    }
+
+    let candidateCount = 0;
+    for (let i = 0; i < ar.length; i++) {
+        if (ar[i] == candidate) candidateCount++;
+    }
+    if (candidateCount > (ar.length / 2)) return candidate;
+}
+
+
+console.log(majorityElement([2, 2, 1, 1, 1, 2, 2]));
