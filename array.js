@@ -329,117 +329,6 @@ function findMaxConsecutiveOnes(ar) {
 // console.log(findMaxConsecutiveOnes([1, 1, 0, 0, 1, 1, 1, 0]));
 
 
-/* 
-------- longest sub array with sum K -------- 
-this is brute force approach
-*/
-function longestSubArray(ar, k) {
-    let finalLength = 0
-    for (let i = 0; i < ar.length; i++) {
-        let sum = 0;
-        let len = 0;
-        for (let j = i; j < ar.length; j++) {
-            sum += ar[j];
-            if (sum >= k) break;
-        }
-
-        if (sum == k) finalLength = Math.max(finalLength, len);
-    }
-
-    return finalLength;
-}
-
-
-// console.log(longestSubArray([5, 4, 2, 3, 1, 1], 3));  //[1,2,3,1,1,1,1,3,3]
-
-
-// -------------- Two pointer sliding window method. type shrinking-------
-function longestSubArrayTwoPointer(ar, k) {
-
-    let sum = 0;
-    let len = 0;
-    let i = 0;
-    let j = 0;
-
-    while (j < ar.length) {
-
-        sum += ar[j];
-
-        while (i <= j && sum > k) {
-            sum -= ar[i];
-            i++;
-        }
-
-        if (sum == k) {
-            len = Math.max(len, (j - i) + 1);
-        }
-        j++;
-    }
-
-    return len;
-
-}
-
-// console.log(longestSubArrayTwoPointer([1, 2, 3, 1, 1, 1, 1, 3, 3], 6));
-
-
-
-// -----Fixed-size Sliding Window-------
-// . Maximum Sum Subarray of Size K
-
-function maxSumSubarray(ar, k) {
-
-    let windowSum = 0;
-    let maxSum = 0;
-
-    // current window
-    for (let i = 0; i < k; i++) {
-        windowSum += ar[i];
-    }
-
-    maxSum = windowSum;
-
-    for (let i = k; i < ar.length; i++) {
-        windowSum += ar[i] - ar[i - k];
-        maxSum = Math.max(maxSum, windowSum);
-    }
-
-    return maxSum;
-}
-
-// console.log(maxSumSubarray([2, 1, 5, 1, 3, 2],3));
-
-// First Negative Number in Every Window of Size K
-
-function firstNegativeNumber(ar, k) {
-
-    let negative = [];
-    for (let i = 0; i < k; i++) {
-        if (ar[i] < 0) {
-            negative.push(ar[i]);
-            break;
-        }
-    }
-
-    for (let i = k; i < ar.length; i++) {
-        let j = (i - k) + 1;
-        let noNeg = true;
-        while (j <= i) {
-            if (ar[j] < 0) {
-                negative.push(ar[j]);
-                noNeg = false;
-                break;
-            }
-            j++;
-        }
-        if (noNeg) negative.push(0);
-    }
-
-    return negative;
-}
-
-// console.log(firstNegativeNumber([12, -1, -7, 8, -15, 30, 16, 28],3))
-
 
 // ------ Two Sum -------------
 /* 
@@ -590,4 +479,63 @@ function majorityElement(ar) {
 }
 
 
-console.log(majorityElement([2, 2, 1, 1, 1, 2, 2]));
+// console.log(majorityElement([2, 2, 1, 1, 1, 2, 2]));
+
+//------- Prefix sum --------------------
+
+function prefixSum() {  // sum from the start to the current index.
+    // original array.
+    let ar = [2, 4, 1, 5, 3];
+
+    // we are creating prefix sum array.
+    let prefix = [];
+    prefix[0] = ar[0];
+
+    for (let i = 1; i < ar.length; i++) {
+        prefix[i] = prefix[i - 1] + ar[i];
+    }
+
+    //---------- Main use Range sum ie; findout out the sum from Left to right
+    // findout of the sum of element from index 1 to 3 from the above array [2, 4, 1, 5, 3];
+    // ie SUM(L,R) = prefix[R] - prefix[L-1] 
+
+    // sum(1,3)
+    let sum1to3 = prefix[3] - prefix[1 - 1]
+    // console.log(sum1to3)
+    // if L is 0 return prefix[R]
+}
+
+// prefixSum()
+
+
+function suffixSum() { // sum from current index to the end.
+    const ar = [2, 4, 1, 5, 3];
+    let suffix = new Array(ar.length);
+    let lastIndex = ar.length - 1
+    suffix[lastIndex] = ar[lastIndex];
+
+    for (let i = lastIndex - 1; i >= 0; i--) {
+        suffix[i] = suffix[i + 1] + ar[i];
+    }
+
+    console.log(suffix)
+}
+
+// suffixSum();
+
+function maximumSubbarraySumBF(ar) {
+    let n = ar.length;
+    let maxSum = 0;
+    for (let i = 0; i < n; i++) {
+        let sum = 0;
+        for (let j = i; j < n; j++) {
+            sum += ar[j];
+            maxSum = Math.max(maxSum, sum)
+        }
+    }
+
+    return maxSum;
+}
+
+// console.log(maximumSubbarraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+
